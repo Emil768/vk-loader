@@ -38,4 +38,16 @@
   &__content {
     padding: 20px;
   }
+
+  &__list {
+    &-empty {
+      text-align: center;
+    }
+  }
+  &__empty {
+    color: #818c99;
+    display: inline-block;
+    font-size: 14px;
+    line-height: 22px;
+  }
 }

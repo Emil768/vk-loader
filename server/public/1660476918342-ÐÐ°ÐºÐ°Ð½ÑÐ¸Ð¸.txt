@@ -1,0 +1,16 @@
+Вакансии в симф
+
+https://hh.ru/vacancy/66145217?from=vacancy_search_list&hhtmFrom=vacancy_search_list
+
+-Typescript, React
+-Redux + Redux-Saga/Redux Toolkit
+-Styled-components, SASS
+-Jest + React Testing Library, Puppeteer,
+-Storybook
+
+
+Цели на месяц:
+
+-Подтянуть верстку  (grid + адаптив)
+-Доучить js.Поделать проекты с ним + верстка
+-Реаакттт
