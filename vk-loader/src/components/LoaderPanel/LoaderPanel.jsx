@@ -24,6 +24,8 @@ function LoaderPanel() {
       file.originalname.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1
   );
 
+  console.log(files);
+
   return (
     <div className="loader">
       <div className="loader__header">

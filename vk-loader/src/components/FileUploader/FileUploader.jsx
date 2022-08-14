@@ -22,11 +22,14 @@ function FileUploader({ onSucces }) {
     axios
       .post("http://localhost:8080/upload", data)
       .then((res) => onSucces(res.data))
+
       .catch((e) => console.log("eror", e));
 
     setFiles([]);
     setNameLoaded([]);
   };
+
+  console.log(files);
 
   return (
     <form method="post" action="#" onSubmit={(e) => e.preventDefault()}>
