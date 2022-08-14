@@ -1,0 +1,21 @@
+.file {
+  &-input {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: center;
+  }
+  &__content {
+    margin: 20px 0;
+  }
+  &__titles {
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+  &__list {
+    padding: revert;
+  }
+  &__item {
+    list-style-type: disc;
+  }
+}

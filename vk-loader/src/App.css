@@ -1,0 +1,25 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+ul,
+li {
+  list-style: none;
+}
+
+.App {
+  background-color: #aeb7c24f;
+  font-family: "Roboto", sans-serif;
+  height: 100vh;
+}
+
+.App__content {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 795px;
+  margin: 0 auto;
+  padding: 20px;
+}

@@ -1,0 +1,41 @@
+.loader {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  background: #fff;
+  border-radius: 8px;
+  width: 550px;
+  margin-right: 10px;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+  }
+
+  &__title {
+    font-weight: 400;
+  }
+  &__count {
+    color: #818c99;
+  }
+
+  &__input {
+    border: none;
+    border-top: 1px solid #dce1e6;
+    border-bottom: 1px solid #dce1e6;
+    width: 100%;
+    padding: 15px 4px 15px 40px;
+    background: transparent url("../../img/SearchIcon.svg") no-repeat 13px
+      center;
+    &:focus {
+      outline: none;
+    }
+    &::placeholder::before {
+      content: "hui";
+    }
+  }
+
+  &__content {
+    padding: 20px;
+  }
+}
