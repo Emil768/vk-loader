@@ -1,10 +1,9 @@
 import React from "react";
-import { useState } from "react";
 import FileUploader from "../FileUploader/FileUploader";
 
 import "./MyModal.scss";
 
-function MyModal({ children, visible, setVisible, onSucces }) {
+function MyModal({ visible, setVisible }) {
   const closeModal = () => setVisible(false);
 
   return (
@@ -26,7 +25,7 @@ function MyModal({ children, visible, setVisible, onSucces }) {
               Файл не должен нарушать авторские права.
             </li>
           </ul>
-          <FileUploader onSucces={onSucces} />
+          <FileUploader closeModal={closeModal} />
         </div>
         <div className="modal__footer">
           <div className="button" onClick={closeModal}>

@@ -17,6 +17,13 @@
     margin-left: 10px;
   }
 
+  &-title {
+    outline: none;
+    &.change {
+      outline: auto;
+    }
+  }
+
   &-info {
     color: #818c99;
   }

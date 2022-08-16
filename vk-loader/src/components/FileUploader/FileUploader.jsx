@@ -1,35 +1,42 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useContext, useState } from "react";
 import axios from "axios";
 import "./FileUploader.scss";
-function FileUploader({ onSucces }) {
+import { UploaderContext } from "../../context";
+
+function FileUploader({ closeModal }) {
   const [files, setFiles] = useState([]);
   const [nameLoaded, setNameLoaded] = useState([]);
 
+  const { setFilesGlobal } = useContext(UploaderContext);
+
   const onInputChange = (e) => {
     const inputFiles = e.target.files;
-    setFiles(inputFiles);
+
+    const newFiles = { files: [], nameLoaded: [] };
 
     for (let i = 0; i < inputFiles.length; i++) {
-      setNameLoaded((oldArray) => [...oldArray, inputFiles[i].name]);
+      newFiles.nameLoaded.push(inputFiles[i].name);
+      newFiles.files.push(inputFiles[i]);
     }
+
+    setFiles((prevFiles) => [...prevFiles, ...newFiles.files]);
+    setNameLoaded((prevNames) => [...prevNames, ...newFiles.nameLoaded]);
   };
 
   const onSubmit = (e) => {
     const data = new FormData();
+
     for (let i = 0; i < files.length; i++) {
       data.append("file", files[i]);
     }
     axios
       .post("http://localhost:8080/upload", data)
-      .then((res) => onSucces(res.data))
-
+      .then((res) => setFilesGlobal(res.data))
       .catch((e) => console.log("eror", e));
 
-    setFiles([]);
     setNameLoaded([]);
+    closeModal();
   };
-
-  console.log(files);
 
   return (
     <form method="post" action="#" onSubmit={(e) => e.preventDefault()}>
@@ -45,7 +52,7 @@ function FileUploader({ onSucces }) {
           Выбрать файл
         </label>
       </div>
-      {files.length ? (
+      {nameLoaded.length ? (
         <Fragment>
           <div className="file__content">
             <span className="file__titles">Вы выбрали файлы:</span>

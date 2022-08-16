@@ -4,33 +4,54 @@ import MyModal from "../MyModal/MyModal";
 
 import "./LoaderPanel.scss";
 import "../MyButton/MyButton.scss";
+import { useContext } from "react";
+import { UploaderContext } from "../../context";
+
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 function LoaderPanel() {
   const [modal, setModal] = useState(false);
-  const [files, setFiles] = useState([]);
   const [searchValue, setSearchValue] = useState("");
+  const [selectTab, setSelectTab] = useState(0);
+
+  const { filesGlobal, setFilesGlobal } = useContext(UploaderContext);
 
   const openModal = () => {
     setModal(true);
   };
 
-  const onSucces = (newfiles) => {
-    setFiles(newfiles);
-    setModal(false);
-  };
-
-  const filterFiles = files.filter(
+  const filterFiles = filesGlobal.filter(
     (file) =>
       file.originalname.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1
   );
 
-  console.log(files);
+  const onDeleteItem = (name) => {
+    confirmAlert({
+      title: "Подтверждение удаления",
+      message: "Вы действительно хотите удалить файл?",
+      buttons: [
+        {
+          label: "Да",
+          onClick: () => {
+            const updateFiles = filterFiles.filter(
+              (item) => item.originalname.indexOf(name) == -1
+            );
+            setFilesGlobal(updateFiles);
+          },
+        },
+        {
+          label: "Нет",
+        },
+      ],
+    });
+  };
 
   return (
     <div className="loader">
       <div className="loader__header">
         <h5 className="loader__title">
-          Файлы <span className="loader__count">{files.length}</span>
+          Файлы <span className="loader__count">{filesGlobal.length}</span>
         </h5>
         <div className="button" onClick={openModal}>
           Загрузить файл
@@ -53,7 +74,7 @@ function LoaderPanel() {
         >
           {filterFiles.length ? (
             filterFiles.map((file, index) => (
-              <LoaderItem key={index} file={file} />
+              <LoaderItem key={index} file={file} onDelete={onDeleteItem} />
             ))
           ) : (
             <span className="loader__empty">
@@ -62,7 +83,7 @@ function LoaderPanel() {
           )}
         </div>
       </div>
-      <MyModal visible={modal} setVisible={setModal} onSucces={onSucces} />
+      <MyModal visible={modal} setVisible={setModal} />
     </div>
   );
 }

@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 
 import "./LoaderItem.scss";
 
-function LoaderItem({ file }) {
-  const formatFileSize = function (bytes) {
+function LoaderItem({ file, onDelete }) {
+  const [title, setTitle] = useState({ value: "", state: false });
+
+  const formatFileSize = (bytes) => {
     const sufixes = ["B", "kB", "MB", "GB"];
     const i = Math.floor(Math.log(bytes) / Math.log(1024));
     return `${(bytes / Math.pow(1024, i)).toFixed(2)} ${sufixes[i]}`;
@@ -18,6 +20,16 @@ function LoaderItem({ file }) {
     day: "numeric",
   };
 
+  const onChangeFile = () => {
+    setTitle({ state: true });
+  };
+
+  const onBlurContent = (target) => {
+    return target
+      ? setTitle({ value: target })
+      : setTitle({ value: file.originalname });
+  };
+
   return (
     <div className="loader__item">
       <img
@@ -26,15 +38,24 @@ function LoaderItem({ file }) {
         className="loader__item-img"
       />
       <div className="loader__item-content">
-        <span className="loader__item-title">{file.originalname}</span>
+        <span
+          className={
+            title.state ? " loader__item-title change" : "loader__item-title"
+          }
+          contentEditable={title.state}
+          suppressContentEditableWarning={true}
+          onBlur={(e) => onBlurContent(e.target.textContent)}
+        >
+          {file.originalname}
+        </span>
         <p className="loader__item-info">
           {formatFileSize(file.size)}{" "}
           {date.toLocaleDateString("ru-RU", options)}
         </p>
       </div>
       <div className="loader__item-options">
-        <i className="bx bx-pencil"></i>
-        <i className="bx bx-x"></i>
+        <i className="bx bx-pencil" onClick={onChangeFile}></i>
+        <i className="bx bx-x" onClick={() => onDelete(file.originalname)}></i>
       </div>
     </div>
   );

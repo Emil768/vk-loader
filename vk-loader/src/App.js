@@ -1,17 +1,22 @@
+import { createContext, useState } from "react";
 import "./App.css";
 
+import { UploaderContext } from "./context/index";
 import LoaderPanel from "./components/LoaderPanel/LoaderPanel.jsx";
 import Tabs from "./components/Tabs/Tabs.jsx";
 
 function App() {
-  return (
-    <div className="App">
-      <div className="App__content">
-        <LoaderPanel />
+  const [filesGlobal, setFilesGlobal] = useState([]);
 
-        <Tabs />
+  return (
+    <UploaderContext.Provider value={{ filesGlobal, setFilesGlobal }}>
+      <div className="App">
+        <div className="App__content">
+          <LoaderPanel />
+          <Tabs />
+        </div>
       </div>
-    </div>
+    </UploaderContext.Provider>
   );
 }
 
