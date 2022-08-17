@@ -4,23 +4,30 @@
   box-sizing: border-box;
 }
 
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: #aeb7c24f;
+  line-height: 1.5;
+}
+
 ul,
 li {
   list-style: none;
 }
 
 .App {
-  background-color: #aeb7c24f;
-
   font-family: "Roboto", sans-serif;
-  height: 100vh;
 }
 
 .App__content {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  width: 795px;
+
   margin: 0 auto;
   padding: 20px;
 }

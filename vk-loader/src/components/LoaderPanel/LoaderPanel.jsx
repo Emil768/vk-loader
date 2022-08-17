@@ -9,6 +9,7 @@ import { UploaderContext } from "../../context";
 
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { confirmAlertDelete } from "../../utils/confirm.js";
+import { useEffect } from "react";
 
 function LoaderPanel() {
   const [modal, setModal] = useState(false);
@@ -65,6 +66,7 @@ function LoaderPanel() {
           )}
         </div>
       </div>
+
       <MyModal visible={modal} setVisible={setModal} />
     </div>
   );

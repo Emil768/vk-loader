@@ -7,12 +7,11 @@
   cursor: pointer;
   width: 130px;
   text-align: center;
-  margin-left: auto;
+
   border: none;
 
   &-center {
     display: block;
-    margin: 0 auto;
   }
   &:hover {
     opacity: 0.9;
@@ -26,6 +25,10 @@
   }
   &-label {
     margin: 0 auto;
+  }
+
+  &-mg-rt {
+    margin-right: 10px;
   }
 }
 

@@ -2,7 +2,7 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
   background: #fff;
   border-radius: 8px;
-  width: 550px;
+  width: 650px;
   margin-right: 10px;
 
   &__header {
@@ -14,6 +14,7 @@
 
   &__title {
     font-weight: 400;
+    font-size: 1.25rem;
   }
   &__count {
     color: #818c99;
@@ -25,6 +26,10 @@
     border-bottom: 1px solid #dce1e6;
     width: 100%;
     padding: 15px 4px 15px 40px;
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
     background: transparent url("../../img/SearchIcon.svg") no-repeat 13px
       center;
     &:focus {

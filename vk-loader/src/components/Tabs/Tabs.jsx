@@ -28,7 +28,7 @@ function Tabs() {
     { name: "Архивы", value: [".rar", ".zip"] },
     { name: "Gif-изображения", value: [".gif"] },
     { name: "Изображения", value: [".png", ".webp"] },
-    { name: "Видео", value: ["mp4"] },
+    { name: "Видео", value: [".mp4"] },
   ];
 
   const onClickTab = (index, value) => {
