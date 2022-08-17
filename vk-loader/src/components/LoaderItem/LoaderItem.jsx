@@ -2,14 +2,10 @@ import React, { useState } from "react";
 
 import "./LoaderItem.scss";
 
+import { formatFileSize } from "../../utils/formatSize";
+
 function LoaderItem({ file, onDelete }) {
   const [title, setTitle] = useState({ value: "", state: false });
-
-  const formatFileSize = (bytes) => {
-    const sufixes = ["B", "kB", "MB", "GB"];
-    const i = Math.floor(Math.log(bytes) / Math.log(1024));
-    return `${(bytes / Math.pow(1024, i)).toFixed(2)} ${sufixes[i]}`;
-  };
 
   const date = new Date();
   const options = {

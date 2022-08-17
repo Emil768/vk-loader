@@ -1,11 +1,23 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { useContext } from "react";
 import { UploaderContext } from "../../context";
 import "./Tabs.scss";
+
 function Tabs() {
   const [activeTab, setActiveTab] = useState(0);
 
-  const { filesGlobal, setFilesGlobal } = useContext(UploaderContext);
+  const { filesGlobal, setFilesFilter } = useContext(UploaderContext);
+
+  const [filterTab, setFilterTab] = useState([]);
+
+  useEffect(() => {
+    (() => setFilterTab(filesGlobal))();
+  }, [filesGlobal]);
+
+  useEffect(() => {
+    setFilesFilter(filterTab);
+  }, [filterTab]);
 
   const tabs = [
     { name: "Все вайлы", value: "*" },
@@ -20,15 +32,14 @@ function Tabs() {
   ];
 
   const onClickTab = (index, value) => {
-    const filterFiles = filesGlobal.filter(
-      (item) => value.indexOf(item.ext) !== -1
-    );
+    const filterFiles =
+      value === "*"
+        ? filesGlobal
+        : filesGlobal.filter((item) => value.indexOf(item.ext) !== -1);
 
-    // setFilesGlobal(filterFiles);
+    setFilterTab(filterFiles);
     setActiveTab(index);
   };
-
-  console.log(filesGlobal);
 
   return (
     <div className="tabs">

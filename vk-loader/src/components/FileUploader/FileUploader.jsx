@@ -2,25 +2,27 @@ import React, { Fragment, useContext, useState } from "react";
 import axios from "axios";
 import "./FileUploader.scss";
 import { UploaderContext } from "../../context";
+import { formatFileSize } from "../../utils/formatSize";
 
 function FileUploader({ closeModal }) {
   const [files, setFiles] = useState([]);
-  const [nameLoaded, setNameLoaded] = useState([]);
+  const [filesInfo, setFilesInfo] = useState({ nameLoaded: [], size: [] });
 
   const { setFilesGlobal } = useContext(UploaderContext);
 
   const onInputChange = (e) => {
     const inputFiles = e.target.files;
 
-    const newFiles = { files: [], nameLoaded: [] };
+    const newFiles = { files: [], info: { nameLoaded: [], size: [] } };
 
     for (let i = 0; i < inputFiles.length; i++) {
-      newFiles.nameLoaded.push(inputFiles[i].name);
+      newFiles.info.nameLoaded.push(inputFiles[i].name);
       newFiles.files.push(inputFiles[i]);
+      newFiles.info.size.push(formatFileSize(inputFiles[i].size));
     }
 
     setFiles((prevFiles) => [...prevFiles, ...newFiles.files]);
-    setNameLoaded((prevNames) => [...prevNames, ...newFiles.nameLoaded]);
+    // setFilesInfo((prevInfo)=>{})
   };
 
   const onSubmit = (e) => {
@@ -34,9 +36,11 @@ function FileUploader({ closeModal }) {
       .then((res) => setFilesGlobal(res.data))
       .catch((e) => console.log("eror", e));
 
-    setNameLoaded([]);
+    // setNameLoaded([]);
     closeModal();
   };
+
+  // console.log(sizeLoaded);
 
   return (
     <form method="post" action="#" onSubmit={(e) => e.preventDefault()}>
@@ -52,23 +56,25 @@ function FileUploader({ closeModal }) {
           Выбрать файл
         </label>
       </div>
-      {nameLoaded.length ? (
+      {/* {nameLoaded.length ? (
         <Fragment>
           <div className="file__content">
             <span className="file__titles">Вы выбрали файлы:</span>
             <ul className="file__list">
-              {nameLoaded.map((item, index) => (
-                <li className="file__item" key={index}>
-                  {item}
-                </li>
-              ))}
+              {nameLoaded.map((name, index) =>
+                sizeLoaded.map((size, indexSize) => (
+                  <li className="file__list-item" key={index}>
+                    {name} ({size})
+                  </li>
+                ))
+              )}
             </ul>
           </div>
           <button className="button button-center" onClick={onSubmit}>
             Загрузить
           </button>
         </Fragment>
-      ) : null}
+      ) : null} */}
     </form>
   );
 }

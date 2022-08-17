@@ -7,51 +7,33 @@ import "../MyButton/MyButton.scss";
 import { useContext } from "react";
 import { UploaderContext } from "../../context";
 
-import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
+import { confirmAlertDelete } from "../../utils/confirm.js";
 
 function LoaderPanel() {
   const [modal, setModal] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-  const [selectTab, setSelectTab] = useState(0);
 
-  const { filesGlobal, setFilesGlobal } = useContext(UploaderContext);
+  const { filesGlobal, setFilesGlobal, filesFilter, setFilesFilter } =
+    useContext(UploaderContext);
 
   const openModal = () => {
     setModal(true);
   };
 
-  const filterFiles = filesGlobal.filter(
+  const filterFiles = filesFilter.filter(
     (file) =>
       file.originalname.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1
   );
 
-  const onDeleteItem = (name) => {
-    confirmAlert({
-      title: "Подтверждение удаления",
-      message: "Вы действительно хотите удалить файл?",
-      buttons: [
-        {
-          label: "Да",
-          onClick: () => {
-            const updateFiles = filterFiles.filter(
-              (item) => item.originalname.indexOf(name) == -1
-            );
-            setFilesGlobal(updateFiles);
-          },
-        },
-        {
-          label: "Нет",
-        },
-      ],
-    });
-  };
+  const onDeleteItem = (name) =>
+    confirmAlertDelete(name, filesGlobal, setFilesGlobal);
 
   return (
     <div className="loader">
       <div className="loader__header">
         <h5 className="loader__title">
-          Файлы <span className="loader__count">{filesGlobal.length}</span>
+          Файлы <span className="loader__count">{filesFilter.length}</span>
         </h5>
         <div className="button" onClick={openModal}>
           Загрузить файл
