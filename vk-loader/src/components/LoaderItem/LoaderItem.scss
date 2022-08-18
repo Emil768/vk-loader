@@ -19,10 +19,28 @@
 
   &-content {
     margin-left: 10px;
+    max-width: 500px;
+    width: 100%;
   }
 
   &-title {
     outline: none;
+    overflow-wrap: break-word;
+
+    &:focus {
+      outline: auto;
+    }
+
+    &[contenteditable]:empty::before {
+      content: "Введите Название";
+    }
+    &[contenteditable]:empty:focus::before {
+      content: attr(data-focused-advice);
+    }
+    &:empty::before {
+      content: "Введите название";
+      color: #b2b2b2;
+    }
     &.change {
       outline: auto;
     }

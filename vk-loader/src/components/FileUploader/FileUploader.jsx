@@ -7,12 +7,19 @@ import { formatFileSize } from "../../utils/formatSize";
 import { ProgressBar } from "react-bootstrap";
 import { useEffect } from "react";
 import { useMemo } from "react";
+import { useRef } from "react";
+import { onUploadFiles } from "../../utils/passFiles";
 
 function FileUploader({ closeModal }) {
   const [files, setFiles] = useState([]);
-  const [nameLoaded, setNameLoaded] = useState([]);
-  const [sizeLoaded, setSizeLoaded] = useState([]);
+  const [infoFiles, setInfoFiles] = useState({
+    nameLoaded: [],
+    size: [],
+    maxSize: 2000000000,
+  });
   const [uploaded, setUploaded] = useState(0);
+
+  const inputRef = useRef();
 
   const { setFilesGlobal } = useContext(UploaderContext);
 
@@ -23,25 +30,10 @@ function FileUploader({ closeModal }) {
   }, [uploaded]);
 
   const clearModal = () => {
-    setNameLoaded([]);
+    // console.log(inputRef.current.files[0]);
+    setInfoFiles({ ...infoFiles, nameLoaded: [], size: [] });
     closeModal();
     setUploaded(0);
-  };
-
-  const onInputChange = (e) => {
-    const inputFiles = e.target.files;
-
-    const newFiles = { files: [], nameLoaded: [], size: [] };
-
-    for (let i = 0; i < inputFiles.length; i++) {
-      newFiles.nameLoaded.push(inputFiles[i].name);
-      newFiles.files.push(inputFiles[i]);
-      newFiles.size.push(inputFiles[i].size);
-    }
-
-    setFiles((prevFiles) => [...prevFiles, ...newFiles.files]);
-    setNameLoaded((prevFiles) => [...prevFiles, ...newFiles.nameLoaded]);
-    setSizeLoaded((prevFiles) => [...prevFiles, ...newFiles.size]);
   };
 
   const onSubmit = (e) => {
@@ -62,9 +54,8 @@ function FileUploader({ closeModal }) {
   };
 
   const totalSize =
-    sizeLoaded.length && sizeLoaded.reduce((acc, size) => (acc += size));
-
-  console.log(formatFileSize(totalSize));
+    infoFiles.size.length &&
+    infoFiles.size.reduce((acc, size) => (acc += size));
 
   return (
     <form method="post" action="#" onSubmit={(e) => e.preventDefault()}>
@@ -73,26 +64,34 @@ function FileUploader({ closeModal }) {
           type="file"
           id="file"
           className="button button-file"
-          onChange={onInputChange}
+          onChange={(e) =>
+            onUploadFiles(e.target.files, setFiles, infoFiles, setInfoFiles)
+          }
           multiple
+          ref={inputRef}
         />
         <label htmlFor="file" className="button button-label">
           Выбрать файл
         </label>
       </div>
-      {nameLoaded.length ? (
+      {infoFiles.nameLoaded.length ? (
         <Fragment>
           <div className="file__content">
             <span className="file__titles">Вы выбрали файлы:</span>
             <ul className="file__list">
-              {nameLoaded.map((name, index) => (
+              {infoFiles.nameLoaded.map((name, index) => (
                 <li className="file__list-item" key={index}>
                   {name}
                 </li>
               ))}
             </ul>
           </div>
-          <span className="file-size">{formatFileSize(totalSize)}</span>
+          <span className="file-size">
+            {formatFileSize(totalSize)}
+            {totalSize >= infoFiles.maxSize ? (
+              <b> размер превышает максимальное значение!</b>
+            ) : null}
+          </span>
           <ProgressBar
             now={uploaded}
             label={`${uploaded}% `}
@@ -101,12 +100,14 @@ function FileUploader({ closeModal }) {
           />
 
           <div className="file-buttons">
-            <button className="button button-mg-rt" onClick={onSubmit}>
+            <button
+              className="button button-mg-rt"
+              onClick={onSubmit}
+              disabled={totalSize >= infoFiles.maxSize ? true : false}
+            >
               Загрузить
             </button>
-            <button className="button" onClick={() => clearModal()}>
-              Очистить
-            </button>
+            <button className="button">Очистить</button>
           </div>
         </Fragment>
       ) : null}

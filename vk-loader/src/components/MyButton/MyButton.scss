@@ -30,6 +30,10 @@
   &-mg-rt {
     margin-right: 10px;
   }
+
+  &:disabled {
+    opacity: 0.6;
+  }
 }
 
 // .file {

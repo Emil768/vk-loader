@@ -3,9 +3,11 @@ import React, { useState } from "react";
 import "./LoaderItem.scss";
 
 import { formatFileSize } from "../../utils/formatSize";
+import { useRef } from "react";
 
 function LoaderItem({ file, onDelete }) {
   const [title, setTitle] = useState({ value: "", state: false });
+  const titleRef = useRef();
 
   const date = new Date();
   const options = {
@@ -20,10 +22,13 @@ function LoaderItem({ file, onDelete }) {
     setTitle({ state: true });
   };
 
-  const onBlurContent = (target) => {
-    return target
-      ? setTitle({ value: target })
-      : setTitle({ value: file.originalname });
+  const onBlurTitle = (title) => {
+    setTitle({
+      value: title,
+    });
+    while (titleRef.current.firstElementChild) {
+      titleRef.current.firstElementChild.remove();
+    }
   };
 
   return (
@@ -38,9 +43,10 @@ function LoaderItem({ file, onDelete }) {
           className={
             title.state ? " loader__item-title change" : "loader__item-title"
           }
+          ref={titleRef}
           contentEditable={title.state}
           suppressContentEditableWarning={true}
-          onBlur={(e) => onBlurContent(e.target.textContent)}
+          onBlur={(e) => onBlurTitle(e.target.textContent)}
         >
           {file.originalname}
         </span>
