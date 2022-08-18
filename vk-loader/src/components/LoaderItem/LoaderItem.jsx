@@ -57,7 +57,7 @@ function LoaderItem({ file, onDelete }) {
       </div>
       <div className="loader__item-options">
         <i className="bx bx-pencil" onClick={onChangeFile}></i>
-        <i className="bx bx-x" onClick={() => onDelete(file.originalname)}></i>
+        <i className="bx bx-x" onClick={() => onDelete(file.rnId)}></i>
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ import Tabs from "./components/Tabs/Tabs.jsx";
 function App() {
   const [filesGlobal, setFilesGlobal] = useState([]);
   const [filesFilter, setFilesFilter] = useState([]);
+
   return (
     <UploaderContext.Provider
       value={{ filesGlobal, setFilesGlobal, filesFilter, setFilesFilter }}

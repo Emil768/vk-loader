@@ -6,8 +6,6 @@ import { formatFileSize } from "../../utils/formatSize";
 
 import { ProgressBar } from "react-bootstrap";
 import { useEffect } from "react";
-import { useMemo } from "react";
-import { useRef } from "react";
 import { onUploadFiles } from "../../utils/passFiles";
 
 function FileUploader({ closeModal }) {
@@ -17,10 +15,8 @@ function FileUploader({ closeModal }) {
     size: [],
     maxSize: 2000000000,
   });
+
   const [uploaded, setUploaded] = useState(0);
-
-  const inputRef = useRef();
-
   const { setFilesGlobal } = useContext(UploaderContext);
 
   useEffect(() => {
@@ -30,7 +26,7 @@ function FileUploader({ closeModal }) {
   }, [uploaded]);
 
   const clearModal = () => {
-    // console.log(inputRef.current.files[0]);
+    setFiles([]);
     setInfoFiles({ ...infoFiles, nameLoaded: [], size: [] });
     closeModal();
     setUploaded(0);
@@ -49,7 +45,7 @@ function FileUploader({ closeModal }) {
         },
       })
 
-      .then((res) => setFilesGlobal(res.data))
+      .then((res) => setFilesGlobal((prev) => [...prev, ...res.data]))
       .catch((e) => console.log("eror", e));
   };
 
@@ -68,7 +64,6 @@ function FileUploader({ closeModal }) {
             onUploadFiles(e.target.files, setFiles, infoFiles, setInfoFiles)
           }
           multiple
-          ref={inputRef}
         />
         <label htmlFor="file" className="button button-label">
           Выбрать файл
@@ -107,7 +102,9 @@ function FileUploader({ closeModal }) {
             >
               Загрузить
             </button>
-            <button className="button">Очистить</button>
+            <button className="button" onClick={clearModal}>
+              Очистить
+            </button>
           </div>
         </Fragment>
       ) : null}

@@ -9,7 +9,6 @@ import { UploaderContext } from "../../context";
 
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { confirmAlertDelete } from "../../utils/confirm.js";
-import { useEffect } from "react";
 
 function LoaderPanel() {
   const [modal, setModal] = useState(false);
@@ -27,8 +26,8 @@ function LoaderPanel() {
       file.originalname.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1
   );
 
-  const onDeleteItem = (name) =>
-    confirmAlertDelete(name, filesGlobal, setFilesGlobal);
+  const onDeleteItem = (id) =>
+    confirmAlertDelete(id, filesGlobal, setFilesGlobal);
 
   return (
     <div className="loader">

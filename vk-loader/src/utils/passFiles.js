@@ -7,7 +7,7 @@ export const onUploadFiles = (files, setFiles, infoFiles, setInfoFiles) => {
     newFiles.info[0].size.push(files[i].size);
   }
 
-  setFiles((prevFiles) => [...prevFiles, ...newFiles.files]);
+  setFiles([...newFiles.files]);
   setInfoFiles({
     ...infoFiles,
     nameLoaded: [...newFiles.info[0].nameLoaded],
