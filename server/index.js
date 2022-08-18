@@ -8,6 +8,8 @@ app.use(cors());
 app.use(express.static("public"));
 app.use(express.static("default/img"));
 
+const PORT = 3001;
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "public");
@@ -47,6 +49,7 @@ app.post("/upload", (req, res) => {
       const files = req.files.map((item) => {
         newFiles = item;
         newFiles["ext"] = path.extname(item.originalname);
+        newFiles["rnId"] = Math.floor(Math.random() * 1000);
 
         extensions.map((item) => {
           if (item.value.includes(newFiles.ext)) {
@@ -65,6 +68,6 @@ app.post("/upload", (req, res) => {
   });
 });
 
-app.listen(8080, () => {
+app.listen(process.env.PORT || PORT, () => {
   console.log("App started on port 8080...");
 });
