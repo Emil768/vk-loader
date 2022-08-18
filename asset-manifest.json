@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/vk-loader/static/css/main.8e558f51.css",
+    "main.js": "/vk-loader/static/js/main.d6d57447.js",
+    "index.html": "/vk-loader/index.html",
+    "static/media/SearchIcon.svg": "/vk-loader/static/media/SearchIcon.de717aab285669b6bad6.svg",
+    "main.8e558f51.css.map": "/vk-loader/static/css/main.8e558f51.css.map",
+    "main.d6d57447.js.map": "/vk-loader/static/js/main.d6d57447.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8e558f51.css",
+    "static/js/main.d6d57447.js"
+  ]
+}
