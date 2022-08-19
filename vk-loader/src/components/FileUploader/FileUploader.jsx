@@ -39,7 +39,7 @@ function FileUploader({ closeModal }) {
       data.append("file", files[i]);
     }
     axios
-      .post("http://localhost:8080/upload", data, {
+      .post("http://localhost:3001/upload", data, {
         onUploadProgress: (data) => {
           setUploaded(Math.round((data.loaded / data.total) * 100));
         },
