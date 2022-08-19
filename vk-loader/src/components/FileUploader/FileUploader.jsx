@@ -39,7 +39,7 @@ function FileUploader({ closeModal }) {
       data.append("file", files[i]);
     }
     axios
-      .post("http://localhost:3001/upload", data, {
+      .post("https://vk-loader-server.herokuapp.com/upload", data, {
         onUploadProgress: (data) => {
           setUploaded(Math.round((data.loaded / data.total) * 100));
         },
