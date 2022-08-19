@@ -2,9 +2,12 @@ const express = require("express");
 const multer = require("multer");
 const cors = require("cors");
 const path = require("path");
+const bodyParser = require("body-parser");
 const app = express();
 
 app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(express.static("public"));
 app.use(express.static("default/img"));
 
