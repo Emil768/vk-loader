@@ -14,7 +14,7 @@ function LoaderPanel() {
   const [modal, setModal] = useState(false);
   const [searchValue, setSearchValue] = useState("");
 
-  const { filesGlobal, setFilesGlobal, filesFilter, setFilesFilter } =
+  const { filesGlobal, setFilesGlobal, filesFilter } =
     useContext(UploaderContext);
 
   const openModal = () => {
