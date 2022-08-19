@@ -34,7 +34,9 @@ function LoaderItem({ file, onDelete }) {
   return (
     <div className="loader__item">
       <img
-        src={`//localhost:8080/${file.src ? file.src : "../../img/file.png"}`}
+        src={`https://vk-loader-server.herokuapp.com/${
+          file.src ? file.src : "../../img/file.png"
+        }`}
         alt={file.fieldname}
         className="loader__item-img"
       />
