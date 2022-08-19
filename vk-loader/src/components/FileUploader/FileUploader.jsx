@@ -17,11 +17,12 @@ function FileUploader({ closeModal }) {
   });
 
   const [uploaded, setUploaded] = useState(0);
-  const { setFilesGlobal } = useContext(UploaderContext);
+  const { setFilesGlobal, setIsLoaded, isLoaded } = useContext(UploaderContext);
 
   useEffect(() => {
     if (uploaded === 100) {
       clearModal();
+      setIsLoaded({ ...isLoaded, state: false });
     }
   }, [uploaded]);
 
@@ -38,6 +39,9 @@ function FileUploader({ closeModal }) {
     for (let i = 0; i < files.length; i++) {
       data.append("file", files[i]);
     }
+
+    setIsLoaded({ ...isLoaded, length: files.length });
+
     axios
       .post("https://vk-loader-server.herokuapp.com/upload", data, {
         onUploadProgress: (data) => {
